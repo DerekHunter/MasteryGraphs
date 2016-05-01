@@ -1,0 +1,22 @@
+{
+  "name": "MasteryGraphs",
+  "version": "1.0.0",
+  "description": "Riot 2016 Api Challenge",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/DerekHunter/MasteryGraphs.git"
+  },
+  "author": "Derek Hunter, Nate Ashby",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/DerekHunter/MasteryGraphs/issues"
+  },
+  "homepage": "https://github.com/DerekHunter/MasteryGraphs",
+  "dependencies": {
+    "sync-request": "^3.0.1"
+  }
+}
