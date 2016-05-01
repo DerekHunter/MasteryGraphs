@@ -17,6 +17,9 @@
   },
   "homepage": "https://github.com/DerekHunter/MasteryGraphs",
   "dependencies": {
+    "body-parser": "^1.15.0",
+    "express": "^4.13.4",
+    "monk": "^1.0.1",
     "sync-request": "^3.0.1"
   }
 }
