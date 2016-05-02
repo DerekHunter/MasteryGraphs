@@ -45,9 +45,9 @@ function InsertIntoDB(obj){
 router.post("/summoner", function(req, res){
 	console.log(req.body.summonerName);
 	summonerCollection.find({summonerName:req.body.summonerName, region:req.body.region},function(err,docs){
-		if(docs == null){
+		if(docs.length == 0){
 			summonerCollection.insert({summonerName:req.body.summonerName, region:req.body.region, processed: false, crawl:false}, function(err, docs){
-				console.log("Inserted");
+				if(err != null) console.log(err);
 			})	
 		}
 	})
