@@ -51,7 +51,7 @@ router.post("/summoner", function(req, res){
 			})	
 		}
 	})
-	res.send("true");
+	res.send("Insert Summoner");
 });
 
 router.get("/next/process/region/:region", function(req, res){
@@ -64,7 +64,7 @@ router.get("/next/crawl/region/:region", function(req, res){
 	summonerCollection.findOne({region:req.params.region, crawl: false}, function(err, docs){
 		if(docs != null){
 			summonerCollection.update(docs._id, {$set:{crawl:true}}, function(err, docs){
-				console.log(docs);
+				if(err != null) console.log(err);
 			});
 		}
 		res.json(docs);	
@@ -79,10 +79,17 @@ router.get('/data', function(req, res){
 });
 
 router.post('/process', function(req, res){
-	var summonerName = req.body.summonerName.toLowerCase();
+	
+	var summonerName = req.body.summonerName.toLowerCase().replace(/ /g,'');
 	var region = req.body.region.toLowerCase();
+	console.log("Storing: " + req.body.summonerName.toLowerCase().replace(" ", ""));
 	id = JSON.parse(request('GET', 'https://na.api.pvp.net/api/lol/' + region + '/v1.4/summoner/by-name/' + summonerName + '?api_key=' + apiKey).body)[summonerName].id;
-	league = JSON.parse(request('GET', 'https://na.api.pvp.net/api/lol/' + region + '/v2.5/league/by-summoner/' + id + '?api_key='+apiKey).body)[id].filter(function(item){return item.queue == "RANKED_SOLO_5x5"})[0].tier;
+	try{
+		league = JSON.parse(request('GET', 'https://na.api.pvp.net/api/lol/' + region + '/v2.5/league/by-summoner/' + id + '?api_key='+apiKey).body)[id].filter(function(item){return item.queue == "RANKED_SOLO_5x5"})[0].tier;	
+	}catch(err){
+		league = "UNRANKED";
+	}
+	
 	mastery = JSON.parse(request('GET', 'https://global.api.pvp.net/championmastery/location/' + region + '1/player/' + id + '/champions?api_key='+apiKey).body);
 	for(var i = 0; i < mastery.length; i++){
 		var temp = {}
@@ -97,7 +104,6 @@ router.post('/process', function(req, res){
 		if(err!=null) console.log(err);
 	});
 	res.send("Processing user: " + summonerName + " in region " + region);
-
 });
 
 
