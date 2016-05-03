@@ -12,25 +12,23 @@ if (apiKey == ''){
 	console.log("Not a valid api key");
 }
 
-regions = [ "eune", "euw", "na", "oce"]
 leagues = ["UNRANKED", "BRONZE", "SILVER", "GOLD", "PLATINUM", "DIAMOND", "MASTER", "CHALLENGER"]
-levels = ["LevelOne", "LevelTwo", "LevelThree", "LevelFour", "LevelFive"]
+levels = [1, 2, 3, 4, 5]
 
 championData = JSON.parse(request('GET', "https://global.api.pvp.net/api/lol/static-data/na/v1.2/champion?api_key="+apiKey).body).data;
 console.log("Inserting...");
-for(regionIndex = 0; regionIndex < regions.length; regionIndex++){
-	for(leagueIndex = 0; leagueIndex < leagues.length; leagueIndex++){
-		for(levelIndex = 0; levelIndex < levels.length; levelIndex++){
-			for (var champion in championData) {
-				if (championData.hasOwnProperty(champion)) {
-					championObject = {}
-					championObject.name = championData[champion].key;
-					championObject.championId = championData[champion].id;
-					championObject.region = regions[regionIndex];
-					championObject.leagues = leagues[leagueIndex];
-					championObject.level = levels[levelIndex];
-					InsertChampionIntoDb(championObject);
-				}
+for(leagueIndex = 0; leagueIndex < leagues.length; leagueIndex++){
+	for(levelIndex = 0; levelIndex < levels.length; levelIndex++){
+		for (var champion in championData) {
+			if (championData.hasOwnProperty(champion)) {
+				championObject = {}
+				championObject.name = championData[champion].key;
+				championObject.championId = championData[champion].id;
+				championObject.league = leagues[leagueIndex];
+				championObject.championLevel = levels[levelIndex];
+				championObject.championPoints = 0;
+				championObject.count = 0;
+				InsertChampionIntoDb(championObject);
 			}
 		}
 	}

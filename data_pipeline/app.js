@@ -27,26 +27,21 @@ summonerCollection = db.get('summoners');
 
 
 function InsertIntoDB(obj){
-	champCollection.find({champId:obj.champId, region:obj.region, league:obj.league, championLevel:obj.championLevel}, function(err, docs){
-		if(docs.length <= 0){
-			obj.count = 1;
-			champCollection.insert(obj);
-		}else{
-			var data = docs[0];
-			data.championPoints = ((data.championPoints * data.count) + obj.championPoints) / (data.count+1);
-			data.count++;
-			champCollection.update(docs[0]._id, {$set:{count:data.count, championPoints:data.championPoints}}, function(err, docs){
-				if(err != null) console.log(err);
-			});
-		}
+	champCollection.find({championId:obj.championId, league:obj.league, championLevel:obj.championLevel}, function(err, docs){
+		var data = docs[0];
+		data.championPoints = ((data.championPoints * data.count) + obj.championPoints) / (data.count+1);
+		data.count++;
+		champCollection.update(docs[0]._id, {$set:{count:data.count, championPoints:data.championPoints}}, function(err, docs){
+			if(err != null) console.log(err);
+		});
 	})
 }
 
 router.post("/summoner", function(req, res){
-	console.log(req.body.summonerName);
-	summonerCollection.find({summonerName:req.body.summonerName, region:req.body.region},function(err,docs){
+	console.log("Insert: "+req.body.summonerName);
+	summonerCollection.find({summonerName:req.body.summonerName},function(err,docs){
 		if(docs.length == 0){
-			summonerCollection.insert({summonerName:req.body.summonerName, region:req.body.region, processed: false, crawl:false}, function(err, docs){
+			summonerCollection.insert({summonerName:req.body.summonerName, processed: false, crawl:false}, function(err, docs){
 				if(err != null) console.log(err);
 			})	
 		}
@@ -54,14 +49,14 @@ router.post("/summoner", function(req, res){
 	res.send("Insert Summoner");
 });
 
-router.get("/next/process/region/:region", function(req, res){
-	summonerCollection.findOne({region:req.params.region, processed: false}, function(err, docs){
+router.get("/next/process", function(req, res){
+	summonerCollection.findOne({processed: false}, function(err, docs){
 		res.json(docs);	
 	})
 });
 
-router.get("/next/crawl/region/:region", function(req, res){
-	summonerCollection.findOne({region:req.params.region, crawl: false}, function(err, docs){
+router.get("/next/crawl", function(req, res){
+	summonerCollection.findOne({crawl: false}, function(err, docs){
 		if(docs != null){
 			summonerCollection.update(docs._id, {$set:{crawl:true}}, function(err, docs){
 				if(err != null) console.log(err);
@@ -79,31 +74,31 @@ router.get('/data', function(req, res){
 });
 
 router.post('/process', function(req, res){
-	
 	var summonerName = req.body.summonerName.toLowerCase().replace(/ /g,'');
-	var region = req.body.region.toLowerCase();
-	console.log("Storing: " + req.body.summonerName.toLowerCase().replace(" ", ""));
+	console.log("Process: " + summonerName)
 	summonerCollection.update({summonerName:summonerName}, {$set:{processed:true}}, function(err, docs){
 		if(err!=null) console.log(err);
 	});
-	id = JSON.parse(request('GET', 'https://'+region+'.api.pvp.net/api/lol/' + region + '/v1.4/summoner/by-name/' + summonerName + '?api_key=' + apiKey).body)[summonerName].id;
 	try{
-		league = JSON.parse(request('GET', 'https://'+region+'.api.pvp.net/api/lol/' + region + '/v2.5/league/by-summoner/' + id + '?api_key='+apiKey).body)[id].filter(function(item){return item.queue == "RANKED_SOLO_5x5"})[0].tier;	
+		id = JSON.parse(request('GET', 'https://na.api.pvp.net/api/lol/na/v1.4/summoner/by-name/' + summonerName + '?api_key=' + apiKey).body)[summonerName].id;
+		league = JSON.parse(request('GET', 'https://na.api.pvp.net/api/lol/na/v2.5/league/by-summoner/' + id + '?api_key='+apiKey).body)[id].filter(function(item){return item.queue == "RANKED_SOLO_5x5"})[0].tier;	
 	}catch(err){
 		league = "UNRANKED";
 	}
 	
-	mastery = JSON.parse(request('GET', 'https://'+region+'.api.pvp.net/championmastery/location/' + region + '1/player/' + id + '/champions?api_key='+apiKey).body);
+	mastery = JSON.parse(request('GET', 'https://na.api.pvp.net/championmastery/location/na1/player/' + id + '/champions?api_key='+apiKey).body);
 	for(var i = 0; i < mastery.length; i++){
 		var temp = {}
-		temp.region = region;
 		temp.league = league;
-		temp.champId = mastery[i].championId;
+		temp.championId = mastery[i].championId;
 		temp.championLevel = mastery[i].championLevel;
 		temp.championPoints = mastery[i].championPoints;
+		if(temp.championLevel == 0){
+			console.log("FOUND");
+		}
 		InsertIntoDB(temp);
 	}
-	res.send("Processing user: " + summonerName + " in region " + region);
+	res.send("Processing user: " + summonerName);
 });
 
 
