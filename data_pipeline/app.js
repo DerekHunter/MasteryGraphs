@@ -18,7 +18,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 var router = express.Router();
 
-champCollection = db.get('champion');
+champCollection = db.get('champions');
 summonerCollection = db.get('summoners');
 
 
@@ -83,14 +83,17 @@ router.post('/process', function(req, res){
 	var summonerName = req.body.summonerName.toLowerCase().replace(/ /g,'');
 	var region = req.body.region.toLowerCase();
 	console.log("Storing: " + req.body.summonerName.toLowerCase().replace(" ", ""));
-	id = JSON.parse(request('GET', 'https://na.api.pvp.net/api/lol/' + region + '/v1.4/summoner/by-name/' + summonerName + '?api_key=' + apiKey).body)[summonerName].id;
+	summonerCollection.update({summonerName:summonerName}, {$set:{processed:true}}, function(err, docs){
+		if(err!=null) console.log(err);
+	});
+	id = JSON.parse(request('GET', 'https://'+region+'.api.pvp.net/api/lol/' + region + '/v1.4/summoner/by-name/' + summonerName + '?api_key=' + apiKey).body)[summonerName].id;
 	try{
-		league = JSON.parse(request('GET', 'https://na.api.pvp.net/api/lol/' + region + '/v2.5/league/by-summoner/' + id + '?api_key='+apiKey).body)[id].filter(function(item){return item.queue == "RANKED_SOLO_5x5"})[0].tier;	
+		league = JSON.parse(request('GET', 'https://'+region+'.api.pvp.net/api/lol/' + region + '/v2.5/league/by-summoner/' + id + '?api_key='+apiKey).body)[id].filter(function(item){return item.queue == "RANKED_SOLO_5x5"})[0].tier;	
 	}catch(err){
 		league = "UNRANKED";
 	}
 	
-	mastery = JSON.parse(request('GET', 'https://global.api.pvp.net/championmastery/location/' + region + '1/player/' + id + '/champions?api_key='+apiKey).body);
+	mastery = JSON.parse(request('GET', 'https://'+region+'.api.pvp.net/championmastery/location/' + region + '1/player/' + id + '/champions?api_key='+apiKey).body);
 	for(var i = 0; i < mastery.length; i++){
 		var temp = {}
 		temp.region = region;
@@ -100,9 +103,6 @@ router.post('/process', function(req, res){
 		temp.championPoints = mastery[i].championPoints;
 		InsertIntoDB(temp);
 	}
-	summonerCollection.update({summonerName:summonerName}, {$set:{processed:true}}, function(err, docs){
-		if(err!=null) console.log(err);
-	});
 	res.send("Processing user: " + summonerName + " in region " + region);
 });
 
