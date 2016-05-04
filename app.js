@@ -11,23 +11,26 @@ var apiKey = JSON.parse(fs.readFileSync('config.txt', 'utf8')).key;
  	console.log("Not a valid api key");
  } 
  
- champCollection = db.get('champion');
+champCollection = db.get('champion');
+recCollection = db.get('recommender');
  
- var region = 'na'
  
- 
- router.get('/region/:region/username/:name/', function(req, res){
+ router.get('/username/:name/', function(req, res){
  	var username = req.params.name.toLowerCase();
- 	var region = req.params.region.toLowerCase();
- 	id = JSON.parse(request('GET', 'https://global.api.pvp.net/api/lol/' + region + '/v1.4/summoner/by-name/' + username + '?api_key=' + apiKey).body)[username].id;
- 	rank = JSON.parse(request('GET', 'https://global.api.pvp.net/api/lol/' + region + '/v2.5/league/by-summoner/' + id + '?api_key='+apiKey).body)[id].filter(function(item){return item.queue == "RANKED_SOLO_5x5"})[0].tier;
- 	mastery = JSON.parse(request('GET', 'https://global.api.pvp.net/championmastery/location/' + region + '1/player/' + id + '/champions?api_key='+apiKey).body);
+ 	id = JSON.parse(request('GET', 'https://na.api.pvp.net/api/lol/na/v1.4/summoner/by-name/' + username + '?api_key=' + apiKey).body)[username].id;
+ 	rank = JSON.parse(request('GET', 'https://na.api.pvp.net/api/lol/na/v2.5/league/by-summoner/' + id + '?api_key='+apiKey).body)[id].filter(function(item){return item.queue == "RANKED_SOLO_5x5"})[0].tier;
+ 	mastery = JSON.parse(request('GET', 'https://na.api.pvp.net/championmastery/location/na1/player/' + id + '/champions?api_key='+apiKey).body);
  	res.json({rank:rank, mastery:mastery});
  });
 
- router.get('/region/:region/league/:league/champion/:champion/', function(req, res){
- 	champCollection.find({region:req.params.region, league:req.params.league, champion:req.params.champion}, function(err, docs){
-    	console.log("STUFF");
+ router.get('/champion/:champion/', function(req, res){
+ 	champCollection.find({champion:req.params.champion}, function(err, docs){
+    	res.json(docs)
+  	});
+ });
+
+  router.get('/recommender/champion/:champion/', function(req, res){
+ 	recCollection.find({champion:req.params.champion}, function(err, docs){
     	res.json(docs)
   	});
  });
