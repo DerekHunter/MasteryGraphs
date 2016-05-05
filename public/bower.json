@@ -16,6 +16,7 @@
   ],
   "dependencies": {
     "angular": "~1.5.5",
-    "foundation": "~5.5.3"
+    "foundation": "~5.5.3",
+    "angular-chart.js": "^0.10.2"
   }
 }
