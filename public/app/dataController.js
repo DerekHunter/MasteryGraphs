@@ -1,8 +1,9 @@
-angular.module('MasteryGraphs').controller('DataController', function($scope){
+angular.module('MasteryGraphs').controller('DataController', function($scope, ChampionService){
 
-	var dataController = this;
-	dataController.message = "Hello fucker!";
-	$scope.message = "TEST";
+	var DataController = this;
+	DataController.message = "Controller Message!";
+	$scope.message = ChampionService.message;
+	$scope.messageTwo = DataController.message;
 
 
 });
