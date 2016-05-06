@@ -2,11 +2,14 @@ angular.module('MasteryGraphs').factory('ChampionService', function($http){
 
 	ChampionService = {}
 	ChampionService.staticChampionData = [];
-	ChampionService.isReady = false;
+	ChampionService.loaded = false;
 	ChampionService.leagues = ["UNRANKED", "BRONZE", "SILVER", "GOLD", "PLATINUM", "DIAMOND", "MASTER", "CHALLENGER"];
 	ChampionService.data = [];
 	ChampionService.graphData;
 
+	ChampionService.isLoaded = function(){
+		return ChampionService.loaded;
+	}
 
 	ChampionService.GetStaticChampionData = function(){
 		$http({
@@ -16,8 +19,7 @@ angular.module('MasteryGraphs').factory('ChampionService', function($http){
 			for(x = 0; x < response.data.length; x++){
 				ChampionService.staticChampionData.push(response.data[x]);
 			}
-			console.log(ChampionService.staticChampionData)
-			ChampionService.isReady = true;
+			ChampionService.loaded = true;
 		}, function errorCallback(response) {
 			console.log(response);
 		});
@@ -29,6 +31,7 @@ angular.module('MasteryGraphs').factory('ChampionService', function($http){
 			url: '/api/champion/' + championId
 		}).then(function successCallback(response) {
 			ChampionService.data = response.data
+			console.log(ChampionService.data)
 			ChampionService.SetGraphData(league);
 		}, function errorCallback(response) {
 			console.log(response);
@@ -41,7 +44,7 @@ angular.module('MasteryGraphs').factory('ChampionService', function($http){
 		})
 	}
 
-	
+
 
 	return ChampionService;
 	

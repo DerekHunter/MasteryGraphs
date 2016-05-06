@@ -1,9 +1,19 @@
 
 <!-- <div ng-repeat="(name, id) in staticData">
-	{{name}}:{{id}}
+{{name}}:{{id}}
 </div> -->
-
 <button ng-click="init()">INIT</button>
 <button ng-click="ChangeChampion()">ChangeCHampiong</button>
 <button ng-click="ChangeLeague()">ChangeLeague</button>
 
+<form name="LeagueSelector">
+	<label for="league"> League select: </label>
+	<select name="leagueSelector" id="leagueSelector" ng-model="currentLeague">
+		<option ng-repeat="league in leagues" value="{{league}}">{{league}}</option>
+	</select>
+</form>
+<button ng-click="log()"> LOG </button>
+<div ng-repeat="item in data">
+	stuff
+	{{item}}
+</div>
