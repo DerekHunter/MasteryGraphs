@@ -1,17 +1,26 @@
 <!DOCTYPE html>
-<html>
+<html ng-app="MasteryGraphs">
 <head>
 	<title>MasteryGraphs</title>
+
+	<link rel="stylesheet" href="bower_components/foundation/css/foundation.min.css">
+
+	<link rel="stylesheet" href="css/main.css">
 
 	<script src="bower_components/jquery/dist/jquery.min.js"></script>
 	<script src="bower_components/foundation/js/foundation.min.js"></script>
 	<script src="bower_components/Chart.js/Chart.js"></script>
-
 	<script src="bower_components/angular/angular.min.js"></script>
+	<script src="bower_components/angular-route/angular-route.min.js"></script>
 	<script src="bower_components/angular-chart.js/dist/angular-chart.js"></script>
 	<script src="bower_components/foundation/js/foundation.min.js"></script>
+
+	<script src="app/app.js"></script>
+	<script src="app/dataController.js"></script>
+	<script src="app/dataService.js"></script>
+
 </head>
 <body>
-	<p>Hello World!</p>
+	<div ng-view></div>
 </body>
 </html>
