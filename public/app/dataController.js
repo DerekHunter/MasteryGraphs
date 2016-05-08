@@ -19,6 +19,7 @@ angular.module('MasteryGraphs').controller('DataController', function($scope, Ch
 			DataController.leagues = ChampionService.leagues;
 			DataController.currentChampion = ChampionService.staticChampionData[0]
 			DataController.currentChampionId = ChampionService.staticChampionData[0].id;
+			DataController.currentChampionName = ChampionService.staticChampionData[0].name;
 			DataController.currentLeague = ChampionService.leagues[3];
 			ChampionService.GetChampionData(DataController.currentChampion, DataController.currentLeague, function(){
 				DataController.graphData = ChampionService.graphData;

@@ -15,7 +15,7 @@
 				<div class = "medium-6 columns">
 					<form name="ChampionSelector">
 						<label for="Champion"> Champion select: </label>
-						<select name="championSelector" id="championSelector" ng-model="ctrl.currentChampionId" value="{{ctrl.currentChampion.name}}">
+						<select name="championSelector" id="championSelector" ng-model="ctrl.currentChampionName" value="{{ctrl.currentChampion.name}}">
 							<option ng-repeat="champion in ctrl.staticData" value="{{champion.name}}">
 								{{champion.name}}
 							</option>
