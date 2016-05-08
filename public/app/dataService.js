@@ -11,37 +11,50 @@ angular.module('MasteryGraphs').factory('ChampionService', function($http){
 		return ChampionService.loaded;
 	}
 
-	ChampionService.GetStaticChampionData = function(){
+	ChampionService.GetStaticChampionData = function(callback){
 		$http({
 			method: 'GET',
 			url: '/api/champions'
 		}).then(function successCallback(response) {
-			for(x = 0; x < response.data.length; x++){
-				ChampionService.staticChampionData.push(response.data[x]);
-			}
+			ChampionService.staticChampionData = response.data.sort(function(a,b){
+				if(a.name < b.name) return -1
+				if(a.name > b.name) return 1
+				return 0;
+			});
 			ChampionService.loaded = true;
+			callback();
 		}, function errorCallback(response) {
 			console.log(response);
 		});
 	}
 
-	ChampionService.GetChampionData = function(championId, league){
-		$http({
-			method: 'GET',
-			url: '/api/champion/' + championId
-		}).then(function successCallback(response) {
-			ChampionService.data = response.data
-			console.log(ChampionService.data)
-			ChampionService.SetGraphData(league);
-		}, function errorCallback(response) {
-			console.log(response);
-		});
+	ChampionService.GetChampionData = function(champion, league, callback){
+		if(champion){
+			$http({
+				method: 'GET',
+				url: '/api/champion/' + champion.id
+			}).then(function successCallback(response) {
+				ChampionService.data = response.data
+				ChampionService.SetGraphData(league);
+				callback();
+			}, function errorCallback(response) {
+				console.log(response);
+			});
+		}
 	};
 
 	ChampionService.SetGraphData = function(league){
-		ChampionService.graphData = ChampionService.data.filter(function(value){
+		ChampionService.graphData = [ChampionService.data.filter(function(value){
 			return league == value.league
-		})
+		}).sort(function(a,b){
+			if(a.championLevel < b.championLevel) return -1;
+			if(a.championLevel > b.championLevel) return 1;
+			return 0;
+		}).map(function(champion){
+			return champion.count;
+		})]
+		console.log(ChampionService.graphData);
+
 	}
 
 

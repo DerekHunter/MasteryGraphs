@@ -1,19 +1,37 @@
 
-<!-- <div ng-repeat="(name, id) in staticData">
-{{name}}:{{id}}
-</div> -->
-<button ng-click="init()">INIT</button>
-<button ng-click="ChangeChampion()">ChangeCHampiong</button>
-<button ng-click="ChangeLeague()">ChangeLeague</button>
 
-<form name="LeagueSelector">
-	<label for="league"> League select: </label>
-	<select name="leagueSelector" id="leagueSelector" ng-model="currentLeague">
-		<option ng-repeat="league in leagues" value="{{league}}">{{league}}</option>
-	</select>
-</form>
-<button ng-click="log()"> LOG </button>
-<div ng-repeat="item in data">
-	stuff
-	{{item}}
+<div ng-if="ctrl.isReady">
+	<div class="row content">
+		<div class="medium-centered medium-12 columns card">
+			<div class="row">
+				<div class = "medium-6 columns">
+					<form name="LeagueSelector">
+						<label for="league"> League select: </label>
+						<select name="leagueSelector" id="ctrl.leagueSelector" ng-model="ctrl.currentLeague">
+							<option ng-repeat="league in ctrl.leagues" value="{{league}}">{{league}}</option>
+						</select>
+					</form>
+				</div>
+				<div class = "medium-6 columns">
+					<form name="ChampionSelector">
+						<label for="Champion"> Champion select: </label>
+						<select name="championSelector" id="championSelector" ng-model="ctrl.currentChampionId" value="{{ctrl.currentChampion.name}}">
+							<option ng-repeat="champion in ctrl.staticData" value="{{champion.name}}">
+								{{champion.name}}
+							</option>
+						</select>
+					</form>
+				</div>
+			</div>
+			<hr>
+			<div class="graph">
+				<canvas id="bar" class="chart chart-bar"
+					chart-data="ctrl.graphData" chart-labels="ctrl.labels" chart-series="ctrl.series">
+				</canvas>
+			</div>
+			<hr>
+			Some Other Shit Goes Here
+		</div>
+	</div>
 </div>
+

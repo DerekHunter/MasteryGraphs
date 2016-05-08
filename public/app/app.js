@@ -1,5 +1,6 @@
 app = angular.module('MasteryGraphs', [
-	'ngRoute',
+	"chart.js",
+	"ngRoute"
 ]);
 
 app.config(['$routeProvider',

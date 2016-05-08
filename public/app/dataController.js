@@ -2,35 +2,60 @@ angular.module('MasteryGraphs').controller('DataController', function($scope, Ch
 
 	var DataController = this;
 
-	$scope.staticData = ChampionService.staticChampionData;
-	$scope.leagues = ChampionService.leagues;
+	$scope.ctrl = DataController;
+	DataController.labels = ["Mastery Level One", "Mastery Level Two", "Mastery Level Three", 
+			"Mastery Level Four", "Mastery Level Five"]
+	DataController.series = ["Series One"]
 
-	$scope.currentChampion = ChampionService.staticChampionData[0]
-	$scope.currentLeague = ChampionService.leagues[3];
-	$scope.graphData = [];
-	$scope.searchText = ""
+	DataController.graphData = [];
+	DataController.isReady = false;
+
+	DataController.searchText = "Enter Text";
 
 
-	$scope.init = function(){
-		ChampionService.GetStaticChampionData();
-		$scope.staticData = ChampionService.staticChampionData;
-		ChampionService.GetChampionData($scope.currentChampion, $scope.currentLeague);
-		$scope.graphData =  ChampionService.graphData;
+	init = function(){
+		ChampionService.GetStaticChampionData(function(){
+			DataController.staticData = ChampionService.staticChampionData;
+			DataController.leagues = ChampionService.leagues;
+			DataController.currentChampion = ChampionService.staticChampionData[0]
+			DataController.currentChampionId = ChampionService.staticChampionData[0].id;
+			DataController.currentLeague = ChampionService.leagues[3];
+			ChampionService.GetChampionData(DataController.currentChampion, DataController.currentLeague, function(){
+				DataController.graphData = ChampionService.graphData;
+				DataController.isReady = true;
+			});
+		});	
+		DataController.graphData =  ChampionService.graphData;
 	}
 
-	$scope.ChangeChampion = function(){
-		ChampionService.GetChampionData($scope.currentChampion, $scope.currentLeague);
-		$scope.graphData =  ChampionService.graphData;
+	DataController.ChangeChampion = function(){
+		ChampionService.GetChampionData(DataController.currentChampion, DataController.currentLeague, function(){
+			DataController.graphData = ChampionService.graphData;
+		});
+		DataController.graphData =  ChampionService.graphData;
 	}
 
-	$scope.ChangeLeague = function(){
-		ChampionService.SetGraphData($scope.currentLeague);
-		$scope.graphData =  ChampionService.graphData;
+	DataController.ChangeLeague = function(){
+		ChampionService.SetGraphData(DataController.currentLeague);
+		DataController.graphData =  ChampionService.graphData;  
 	}
 
-	$scope.$watch('currentLeague', function(newValue, oldValue){
-		$scope.ChangeLeague();
-		console.log($scope.graphData);
+	$scope.$watch('ctrl.currentLeague', function(newValue, oldValue){
+		DataController.ChangeLeague();
 	})
 
+	$scope.$watch('ctrl.currentChampionId', function(newValue, oldValue){
+		if(DataController.staticData){
+			console.log("EXISTS");
+			DataController.currentChampion = DataController.staticData.find(function(obj){
+				return obj.name == newValue;
+			})
+			DataController.ChangeChampion();
+		}else{
+			console.log("Doesn'tExist");
+		}
+		
+	})
+
+	init();
 });
