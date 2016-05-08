@@ -4,6 +4,16 @@
 	<div class="row content">
 		<div class="medium-centered medium-12 columns card">
 			<div class="row">
+				<div class = "medium-centered medium-10 columns chart-title">
+					Mastery Histogram
+				</div>
+			</div>
+			<div class="graph">
+				<canvas id="bar" class="chart chart-bar"
+					chart-data="ctrl.graphData" chart-labels="ctrl.labels" chart-series="ctrl.series">
+				</canvas>
+			</div>
+			<div class="row">
 				<div class = "medium-6 columns">
 					<form name="LeagueSelector">
 						<label for="league"> League select: </label>
@@ -24,13 +34,23 @@
 				</div>
 			</div>
 			<hr>
-			<div class="graph">
-				<canvas id="bar" class="chart chart-bar"
-					chart-data="ctrl.graphData" chart-labels="ctrl.labels" chart-series="ctrl.series">
-				</canvas>
+			<div class="row">
+				<div class = "medium-6 columns stat-label">
+					LEAGUE AVERAGE:
+				</div>
+				<div class="medium-6 columns stat-value">
+					{{ctrl.leagueAverage}}
+				</div>
 			</div>
 			<hr>
-			Some Other Shit Goes Here
+			<div class="row">
+				<div class = "medium-6 columns stat-label">
+					REGION AVERAGE:
+				</div>
+				<div class="medium-6 columns stat-value">
+					{{ctrl.championAverage}}
+				</div>
+			</div>
 		</div>
 	</div>
 </div>

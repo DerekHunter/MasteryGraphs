@@ -53,11 +53,7 @@ angular.module('MasteryGraphs').factory('ChampionService', function($http){
 		}).map(function(champion){
 			return champion.count;
 		})]
-		console.log(ChampionService.graphData);
-
 	}
-
-
 
 	return ChampionService;
 	

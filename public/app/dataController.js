@@ -45,17 +45,19 @@ angular.module('MasteryGraphs').controller('DataController', function($scope, Ch
 		DataController.ChangeLeague();
 	})
 
-	$scope.$watch('ctrl.currentChampionId', function(newValue, oldValue){
+	$scope.$watch('ctrl.currentChampionName', function(newValue, oldValue){
 		if(DataController.staticData){
-			console.log("EXISTS");
 			DataController.currentChampion = DataController.staticData.find(function(obj){
 				return obj.name == newValue;
 			})
 			DataController.ChangeChampion();
-		}else{
-			console.log("Doesn'tExist");
 		}
 		
+	})
+
+	$scope.$watch('ctrl.graphData', function(newValue, oldValue){
+		DataController.leagueAverage = DataController.graphData[0][0]
+		DataController.championAverage = DataController.graphData[0][0]
 	})
 
 	init();
