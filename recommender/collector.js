@@ -31,7 +31,7 @@ for(var gameIndex = 0; gameIndex < featuredGame.gameList.length; gameIndex++){
 }
 
 x=0;
-while(x < summoners.length && summoners.length < 100000){
+while(x < summoners.length && summoners.length < 10000){
 	try{
 		summonerName = summoners[x];
 		console.log(summonerName);
