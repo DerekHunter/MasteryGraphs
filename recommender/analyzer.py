@@ -1,6 +1,6 @@
 
 
-dataFile = open("masteryData.txt");
+dataFile = open("data/masteryData.txt");
 data = list(dataFile);
 dataFile.close();
 
