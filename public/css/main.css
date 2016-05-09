@@ -52,24 +52,15 @@ body{
   opacity: 0;
   transition: 0s all linear;
   -webkit-transition: 0s all linear;
-  z-index: -1;
 }
 .animate-show.ng-show {
-  position: fixed;
-  width: 100%;
-  height: 100%;
   opacity: 1;
-  transition: .5s all linear;
+  transition: .25s all linear;
   -webkit-transition: 1s all linear;
-  z-index: -1;
 }
 
 .previous-image {
-  opacity: .5;
-  width: 100%;
-  height: 100%;
-  position: fixed;
-  z-index: -2;
+  opacity: 1;
 }
 
 .pointer {
