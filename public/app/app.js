@@ -10,6 +10,9 @@ app.config(['$routeProvider',
 			templateUrl: 'app/partials/graphs.html',
 			controller: 'DataController'
 		}).
+		when('/faq', {
+			templateUrl: 'app/partials/faq.html'
+		}).
 		otherwise({
 			redirectTo:'/graphs'
 		});
