@@ -58,6 +58,6 @@ router.get('/data', function(req, res){
  app.use(express.static('public'));
  app.use('/api', router);
  
- app.listen(3001, function(){
- 	console.log('App listening on port 3000!');
+ app.listen(80, function(){
+ 	console.log('App listening on port 80');
  });
