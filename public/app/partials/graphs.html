@@ -1,5 +1,8 @@
 
-
+<div>
+	<img class="animate-show previous-image"   ng-src="{{ ctrl.prevImage }}" ng-show="ctrl.image != ctrl.prevImage" />
+	<img class="animate-show" image-change ng-src="{{ ctrl.image }}" />
+</div>
 <div ng-if="ctrl.isReady">
 	<div class="row content">
 		<div class="medium-centered medium-12 columns card">

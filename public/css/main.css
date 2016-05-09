@@ -27,8 +27,46 @@ body{
 }
 
 .card{
+	opacity: .9;
 	margin-top:5%;
 	padding:1em;
 	background-color:#ffffff;
 	box-shadow:0 3px 6px rgba(0,0,0,0.26);
+}
+
+.animate-show.ng-hide-fade {
+  opacity: 0;
+  transition: 0s all linear;
+  -webkit-transition: 0s all linear;
+  z-index: -1;
+}
+.animate-show.ng-show {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  opacity: 1;
+  transition: .5s all linear;
+  -webkit-transition: 1s all linear;
+  z-index: -1;
+}
+
+.previous-image {
+  opacity: .5;
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  z-index: -2;
+}
+
+.pointer {
+  cursor: pointer;
+}
+
+img.thumb.small {
+  max-width: 50px;
+  max-height: 50px;
+}
+img.active {
+  border: 2px solid black;
+  opacity: 0.8;
 }
