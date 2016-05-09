@@ -15,6 +15,7 @@ body{
 
 
 .header{
+	z-index: 1;
 	position: fixed;
 	opacity: .75;
 	background-color:#333;
@@ -30,9 +31,17 @@ body{
 	text-align: center;
 }
 
+.background{
+	width: 100%;
+	height: 100%;
+	position: fixed;
+	z-index: -2;
+}
+
 .card{
-	opacity: .95;
-	margin-top:128px;
+	z-index:0;
+	opacity: .925;
+	margin-top:96px;
 	padding:1em;
 	background-color:#ffffff;
 	box-shadow:0 3px 6px rgba(0,0,0,0.26);
@@ -42,24 +51,15 @@ body{
   opacity: 0;
   transition: 0s all linear;
   -webkit-transition: 0s all linear;
-  z-index: -1;
 }
 .animate-show.ng-show {
-  position: absolute;
-  width: 100%;
-  height: 100%;
   opacity: 1;
-  transition: .5s all linear;
+  transition: .25s all linear;
   -webkit-transition: 1s all linear;
-  z-index: -1;
 }
 
 .previous-image {
-  opacity: .5;
-  width: 100%;
-  height: 100%;
-  position: absolute;
-  z-index: -2;
+  opacity: 1;
 }
 
 .pointer {
