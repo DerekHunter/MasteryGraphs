@@ -73,7 +73,7 @@ router.get('/data', function(req, res){
 	});
 });
 
-router.post('/recommender/champion/:championId/:data', function(req, res){
+router.post('/recommender/champion/:championId', function(req, res){
 	var champId = req.params.championId;
 	var data = req.params.data;
 	console.log(champId);

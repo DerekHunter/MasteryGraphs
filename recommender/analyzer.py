@@ -16,7 +16,7 @@ for baseChampion in range(0, len(data[0])):
 	print(baseChampion)
 	outFile = open("outFile.csv", 'a');
 	for fill in range(0, baseChampion):
-		outFile.write("0");
+		outFile.write("0,");
 	outFile.close();
 	for compareChampion in range(baseChampion, len(data[0])):
 		similarity = 0;
