@@ -6,7 +6,6 @@ var fs = require('fs');
 var bodyParser = require('body-parser');
 
 var apiKey = JSON.parse(fs.readFileSync('../config.txt', 'utf8')).key;
-console.log(apiKey);
 if (apiKey == ''){
 	console.log("Not a valid api key");
 }
@@ -20,6 +19,7 @@ var router = express.Router();
 
 champCollection = db.get('champions');
 summonerCollection = db.get('summoners');
+recommenderCollection = db.get('recommender');
 
 
 
@@ -71,6 +71,16 @@ router.get('/data', function(req, res){
 		console.log(docs.length);
 		res.json(docs);
 	});
+});
+
+router.post('/recommender/champion/:championId/:data', function(req, res){
+	var champId = req.params.championId;
+	var data = req.params.data;
+	console.log(champId);
+	console.log(data);
+	// recommenderCollection.insert({summonerName:req.body.summonerName, processed: false, crawl:false}, function(err, docs){
+	// 	if(err != null) console.log(err);
+	// });
 });
 
 router.post('/process', function(req, res){

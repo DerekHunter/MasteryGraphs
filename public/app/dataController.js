@@ -11,6 +11,8 @@ angular.module('MasteryGraphs').controller('DataController', function($scope, Ch
 	DataController.isReady = false;
 
 	DataController.searchText = "Enter Text";
+	DataController.image = "http://ddragon.leagueoflegends.com/cdn/img/champion/splash/Aatrox_0.jpg"
+	DataController.prevImage = DataController.image;
 
 
 	init = function(){
@@ -50,6 +52,8 @@ angular.module('MasteryGraphs').controller('DataController', function($scope, Ch
 			DataController.currentChampion = DataController.staticData.find(function(obj){
 				return obj.name == newValue;
 			})
+			DataController.prevImage = DataController.image;
+			DataController.image = "http://ddragon.leagueoflegends.com/cdn/img/champion/splash/" + DataController.currentChampion.name + "_0.jpg"
 			DataController.ChangeChampion();
 		}
 		
@@ -57,7 +61,29 @@ angular.module('MasteryGraphs').controller('DataController', function($scope, Ch
 
 	$scope.$watch('ctrl.graphData', function(newValue, oldValue){
 		DataController.leagueAverage = DataController.graphData[0][0]
+		DataController.regionAverage = DataController.graphData[0][0]
 	})
 
 	init();
+});
+
+angular.module('MasteryGraphs').directive("imageChange", function ($timeout) {
+    return {
+        restrict: "A",
+        scope: {},
+        link: function (scope, element, attrs) {
+        	console.log(element);
+        	console.log(attrs);
+            element.on("load", function () {
+                $timeout(function () {
+                    element.removeClass("ng-hide-fade");
+                    element.addClass("ng-show");
+                }, 500);
+            });
+            attrs.$observe("ngSrc", function () {
+               element.removeClass("ng-show");
+                element.addClass("ng-hide-fade");
+            });
+        }
+    }
 });

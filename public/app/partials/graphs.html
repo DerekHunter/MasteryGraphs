@@ -1,5 +1,8 @@
 
-
+<div>
+	<img class="animate-show previous-image"   ng-src="{{ ctrl.prevImage }}" ng-show="ctrl.image != ctrl.prevImage" />
+	<img class="animate-show" image-change ng-src="{{ ctrl.image }}" />
+</div>
 <div ng-if="ctrl.isReady">
 	<div class="row content">
 		<div class="medium-centered medium-12 columns card">
@@ -41,6 +44,19 @@
 				<div class="medium-6 columns stat-value">
 					{{ctrl.leagueAverage}}
 				</div>
+			</div>
+			<hr>
+			<div class="row">
+				<div class = "medium-6 columns stat-label">
+					REGION AVERAGE:
+				</div>
+				<div class="medium-6 columns stat-value">
+					{{ctrl.regionAverage}}
+				</div>
+			</div>
+			<hr>
+			<div>
+			Recommender
 			</div>
 		</div>
 	</div>
