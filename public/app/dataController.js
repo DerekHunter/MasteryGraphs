@@ -61,6 +61,7 @@ angular.module('MasteryGraphs').controller('DataController', function($scope, Ch
 
 	$scope.$watch('ctrl.graphData', function(newValue, oldValue){
 		DataController.leagueAverage = DataController.graphData[0][0]
+		DataController.regionAverage = DataController.graphData[0][0]
 	})
 
 	init();
