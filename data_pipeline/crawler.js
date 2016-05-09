@@ -19,11 +19,13 @@ for(var gameIndex = 0; gameIndex < featuredGame.gameList.length; gameIndex++){
 		})
 	}
 }
-
 while(true){
 	try{
-		summoner = JSON.parse(request('GET', "localhost:3000/api/next/crawl").body);
+		console.log("test");
+		summoner = JSON.parse(request('GET', "http://localhost:3000/api/next/crawl").body);
+		console.log("test");
 		summonerName = summoner.summonerName.toLowerCase().replace(/ /g,'')
+		console.log(summonerName);
 		id = JSON.parse(request('GET', 'https://na.api.pvp.net/api/lol/na/v1.4/summoner/by-name/' + summonerName + '?api_key=' + apiKey).body)[summonerName].id;
 		matchHistory = JSON.parse(request('GET', "https://na.api.pvp.net/api/lol/na/v2.2/matchlist/by-summoner/" + id + "?api_key="+apiKey).body)['matches']	
 		for(var gameCnt = 0; gameCnt < 5; gameCnt++){
@@ -38,6 +40,6 @@ while(true){
 			}
 		}
 	}catch(err){
-
+		console.log(err)
 	}
 }
