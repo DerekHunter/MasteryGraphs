@@ -18,7 +18,7 @@ app.config(['$routeProvider',
 			templateUrl: 'app/partials/faq.html'
 		}).
 		otherwise({
-			redirectTo:'/graphs'
+			redirectTo:'/recommender'
 		});
 
 	}])
