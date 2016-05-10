@@ -1,6 +1,6 @@
 import urllib2, json
 
-url = "localhost:3000/api/recommender/champion/"
+url = "http://localhost:3000/api/recommender/champion/"
 
 if __name__ == '__main__':
 
@@ -24,6 +24,7 @@ if __name__ == '__main__':
 			"id": ids[i],
 			"data": temp
 			})
-		
-		req = urllib2.Request(url + ids[i], sendData, {'Content-Type': 'application/json'})
-		print urllib2.urlopen(req).read()
+
+		res = urllib2.urlopen(url + ids[i], data=sendData)
+		print res.read();
+		# print urllib2.urlopen(req).read()
