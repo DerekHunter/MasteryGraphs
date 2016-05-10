@@ -1,0 +1,52 @@
+<div class="row content">
+	<div class="medium-centered medium-12 columns card" style="z-index:0;">
+		<div  class="row">
+			<div class="medium-2 medium-centered columns current-champion">
+				<div class="recommended-heading">
+					Current Champion
+				</div>
+				<img class = "champion-icon" ng-src="{{ ctrl.image }}">
+			</div>
+		</div>
+		<div class = "row">
+			<div class="medium-2 medium-centered columns">
+				<form name="ChampionSelector">
+					<select name="championSelector" id="championSelector" ng-model="ctrl.currentChampionName" value="{{ctrl.currentChampion.name}}">
+						<option ng-repeat="champion in ctrl.staticData" value="{{champion.name}}">
+							{{champion.name}}
+						</option>
+					</select>
+				</form>
+			</div>
+		</div>
+		<hr>
+		<div class="row">
+			<div class = "medium-6 medium-centered columns recommended-heading">
+				Recommended Champions
+			</div>
+		</div>
+		<div class="row">
+			<div class="medium-4 columns">
+				<div class="medium-5 medium-centered columns current-champion">
+					Current Champion
+					<img class = "champion-icon" ng-src="{{ ctrl.image }}">
+					two
+				</div>
+			</div>
+			<div class="medium-4 columns">
+				<div class="medium-5 medium-centered columns current-champion">
+					Current Champion
+					<img class = "champion-icon" ng-src="{{ ctrl.image }}">
+					onE
+				</div>
+			</div>
+			<div class="medium-4 columns">
+				<div class="medium-5 medium-centered columns current-champion">
+					Current Champion
+					<img class = "champion-icon" ng-src="{{ ctrl.image }}">
+					three
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

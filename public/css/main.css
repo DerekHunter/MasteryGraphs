@@ -7,6 +7,24 @@ body{
 	text-align: right;
 }
 
+.current-champion{
+	text-align: center;
+}
+
+.recommended-heading{
+	text-align: center;
+	font-size: 24px;
+	line-height: 24px;
+}
+
+.champion-icon{
+	width:100%;
+	height:100%;
+	border-radius: 100%;
+	margin-top: 12px;
+	margin-bottom: 32px
+}
+
 .chart-title{
 	text-align: center;
 	font-size: 18px;
