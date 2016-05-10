@@ -77,6 +77,7 @@ router.post('/recommender/champion/:championId', function(req, res){
 	var champId = req.params.championId;
 	console.log(champId);
 	console.log(req.body);
+	res.send("found");
 	// recommenderCollection.insert({summonerName:req.body.summonerName, processed: false, crawl:false}, function(err, docs){
 	// 	if(err != null) console.log(err);
 	// });
