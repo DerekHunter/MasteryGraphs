@@ -4,7 +4,7 @@ angular.module('MasteryGraphs').controller('RecommenderController', function($sc
 	var RecommenderController = this;
 	$scope.ctrl = RecommenderController;
 	blackList = [3,136,83,6, 420, 30, 44, 36, 38, 85, 50, 20, 96, 72, 110, 113, 115, 45, 13, 14, 127, 57, 33, 68, 134, 69,
-	61, 102, 29, 48, 223, 101, 42, 98, 56];
+	61, 102, 29, 48, 223, 101, 42, 98, 56, 78, 2];
 
 	RecommenderService.GetChampionData(function(){
 		RecommenderController.staticData = RecommenderService.staticChampionData;
@@ -32,6 +32,7 @@ angular.module('MasteryGraphs').controller('RecommenderController', function($sc
 
 				x = 1;
 				while(RecommenderController.reconChamps.length < 3 && x < RecommenderService.recommenderData.length){
+
 					if(blackList.find(function(obj){
 						return obj == RecommenderService.recommenderData[x].champId;
 					})){
