@@ -19,12 +19,9 @@ if __name__ == '__main__':
 		temp = []
 		for j in range(len(data[i])):
 			if data[i][j] != '':
-				temp.append(float(data[i][j]))
-		sendData = json.dumps({
-			"id": ids[i],
-			"data": temp
-			})
+				temp.append({"champId": ids[j], "similarity":float(data[i][j])})
+		sendData = json.dumps({"id": ids[i], "data": temp})
 
-		res = urllib2.urlopen(url + ids[i], data=sendData)
-		print res.read();
+		req = urllib2.Request(url + ids[i], data=sendData,  headers={'content-type': 'application/json'})
+		res = urllib2.urlopen(req)
 		# print urllib2.urlopen(req).read()

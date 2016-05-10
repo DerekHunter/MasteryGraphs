@@ -13,7 +13,6 @@ if (apiKey == ''){
 
 var app = express();
 app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: true }));
 
 var router = express.Router();
 
@@ -74,13 +73,10 @@ router.get('/data', function(req, res){
 });
 
 router.post('/recommender/champion/:championId', function(req, res){
-	var champId = req.params.championId;
-	console.log(champId);
-	console.log(req.body);
-	res.send("found");
-	// recommenderCollection.insert({summonerName:req.body.summonerName, processed: false, crawl:false}, function(err, docs){
-	// 	if(err != null) console.log(err);
-	// });
+	recommenderCollection.insert({id:req.body.id, data:req.body.data}, function(err, docs){
+		if(err != null) console.log(err);
+	});
+	res.send("inserted");
 });
 
 router.post('/process', function(req, res){
