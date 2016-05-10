@@ -52,6 +52,7 @@ angular.module('MasteryGraphs').controller('DataController', function($scope, Ch
 			DataController.currentChampion = DataController.staticData.find(function(obj){
 				return obj.name == newValue;
 			})
+
 			DataController.prevImage = DataController.image;
 			DataController.image = "http://ddragon.leagueoflegends.com/cdn/img/champion/splash/" + DataController.currentChampion.name + "_0.jpg"
 			DataController.ChangeChampion();
@@ -60,8 +61,29 @@ angular.module('MasteryGraphs').controller('DataController', function($scope, Ch
 	})
 
 	$scope.$watch('ctrl.graphData', function(newValue, oldValue){
-		DataController.leagueAverage = DataController.graphData[0][0]
-		DataController.regionAverage = DataController.graphData[0][0]
+		if(DataController.graphData[0].length !=0){
+			pts = DataController.graphData[0].reduce(function(prev, cur, ci, arr){
+				return prev+(ci+1)*cur;
+			})
+			cnt = DataController.graphData[0].reduce(function(prev, cur, ci, arr){
+				return prev+cur;
+			})
+			if(cnt == 0){
+				DataController.leagueAverage = 0
+			}else{
+				DataController.leagueAverage = Math.round((pts / cnt)*100)/100	
+			}		
+
+			cnt = 0;
+			pts = 0;
+			for(x = 0; x < ChampionService.data.length; x++){
+				pts += ChampionService.data[x].championLevel*ChampionService.data[x].count;
+				cnt += ChampionService.data[x].count;
+			}
+
+			DataController.regionAverage = Math.round((pts / cnt)*100)/100
+		}
+		
 	})
 
 	init();
@@ -72,8 +94,6 @@ angular.module('MasteryGraphs').directive("imageChange", function ($timeout) {
         restrict: "A",
         scope: {},
         link: function (scope, element, attrs) {
-        	console.log(element);
-        	console.log(attrs);
             element.on("load", function () {
                 $timeout(function () {
                     element.removeClass("ng-hide-fade");
