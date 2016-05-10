@@ -3,7 +3,8 @@ angular.module('MasteryGraphs').controller('RecommenderController', function($sc
 
 	var RecommenderController = this;
 	$scope.ctrl = RecommenderController;
-
+	blackList = [3,136,83,6, 420, 30, 44, 36, 38, 85, 50, 20, 96, 72, 110, 113, 115, 45, 13, 14, 127, 57, 33, 68, 134, 69,
+	61, 102, 29, 48, 223, 101, 42, 98, 56];
 
 	RecommenderService.GetChampionData(function(){
 		RecommenderController.staticData = RecommenderService.staticChampionData;
@@ -15,7 +16,6 @@ angular.module('MasteryGraphs').controller('RecommenderController', function($sc
 	});
 
 	RecommenderService.GetRecommenderData(1, function(){
-		console.log(RecommenderService.recommenderData);
 	})
 
 
@@ -30,14 +30,21 @@ angular.module('MasteryGraphs').controller('RecommenderController', function($sc
 				RecommenderController.icon = "http://ddragon.leagueoflegends.com/cdn/6.9.1/img/champion/"+RecommenderController.currentChampion.name+".png"
 				RecommenderController.reconChamps = [];
 
-				for(x = 1; x < 4; x++){
+				x = 1;
+				while(RecommenderController.reconChamps.length < 3 && x < RecommenderService.recommenderData.length){
+					if(blackList.find(function(obj){
+						return obj == RecommenderService.recommenderData[x].champId;
+					})){
+						x++;
+						continue;
+					}
+
 					RecommenderController.reconChamps.push(RecommenderController.currentChampion = RecommenderController.staticData.find(function(obj){
 						return obj.id == RecommenderService.recommenderData[x].champId;
 					}))
-					RecommenderController.reconChamps[x-1].icon = "http://ddragon.leagueoflegends.com/cdn/6.9.1/img/champion/"+RecommenderController.reconChamps[x-1].name+".png"
+					RecommenderController.reconChamps[RecommenderController.reconChamps.length-1].icon = "http://ddragon.leagueoflegends.com/cdn/6.9.1/img/champion/"+RecommenderController.reconChamps[RecommenderController.reconChamps.length-1].name+".png"
+					x++;
 				}
-
-				console.log(RecommenderController.reconChamps);
 			})
 		}
 		
