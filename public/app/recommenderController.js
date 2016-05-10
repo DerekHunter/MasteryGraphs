@@ -24,6 +24,9 @@ angular.module('MasteryGraphs').controller('RecommenderController', function($sc
 			RecommenderController.currentChampion = RecommenderController.staticData.find(function(obj){
 				return obj.name == newValue;
 			})
+			if(RecommenderController.currentChampion.name == "Fizz" || RecommenderController.currentChampion.name == "Teemo"){
+				alert("Why are you a terrible person?? ='(");
+			}
 			RecommenderService.GetRecommenderData(RecommenderController.currentChampion.id, function(){
 				RecommenderController.prevImage = RecommenderController.image;
 				RecommenderController.image = "http://ddragon.leagueoflegends.com/cdn/img/champion/splash/" + RecommenderController.currentChampion.name + "_0.jpg"
@@ -46,7 +49,6 @@ angular.module('MasteryGraphs').controller('RecommenderController', function($sc
 					RecommenderController.reconChamps[RecommenderController.reconChamps.length-1].icon = "http://ddragon.leagueoflegends.com/cdn/6.9.1/img/champion/"+RecommenderController.reconChamps[RecommenderController.reconChamps.length-1].name+".png"
 					x++;
 				}
-				console.log(RecommenderController.reconChamps);
 			})
 		}
 		
