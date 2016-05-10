@@ -30,7 +30,10 @@ router.get('/champion/:championId/', function(req, res){
 });
 
 router.get('/recommender/champion/:championId/', function(req, res){
-	recCollection.find({championId:req.params.championId}, function(err, docs){
+	console.log("recom");
+	console.log(req.params.championId);
+	recCollection.find({"id":req.params.championId}, function(err, docs){
+		console.log(docs);
 		res.json(docs)
 	});
 });
