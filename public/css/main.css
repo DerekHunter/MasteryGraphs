@@ -95,6 +95,7 @@ a:active {
 }
 
 .card{
+	margin-bottom: 36px;
 	z-index:0;
 	opacity: .925;
 	margin-top:128px;
