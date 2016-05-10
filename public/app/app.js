@@ -12,7 +12,7 @@ app.config(['$routeProvider',
 		}).
 		when('/recommender', {
 			templateUrl: 'app/partials/recommender.html',
-			controller: 'DataController'
+			controller: 'RecommenderController'
 		}).
 		when('/faq', {
 			templateUrl: 'app/partials/faq.html'
